@@ -1,0 +1,24 @@
+/.ready
+
+###> symfony/framework-bundle ###
+/.env.local.php
+/.env.*.local
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+/bin/.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+/public/uploads/*
+/storage/
+/.idea
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###

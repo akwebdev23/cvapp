@@ -1,0 +1,4 @@
+FROM postgres:13-alpine
+
+COPY ./docker/production/postgres/postgresql.conf /etc/postgresql/postgresql.conf
+CMD ["-c", "config_file=/etc/postgresql/postgresql.conf"]
