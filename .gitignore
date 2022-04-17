@@ -8,5 +8,5 @@
 /var/
 /vendor/
 /node modules/
-
+/.env.local
 ###< symfony/framework-bundle ###
