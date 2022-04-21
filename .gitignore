@@ -9,4 +9,5 @@
 /vendor/
 /node modules/
 /migrations/*
+/public/upload/*
 ###< symfony/framework-bundle ###
