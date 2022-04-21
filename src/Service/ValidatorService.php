@@ -9,9 +9,9 @@ class ValidatorService{
     public function __construct(ValidatorInterface $validator){
         $this->validator = $validator;
     }
-    public function validate(Skill $skill)
+    public function validate($entity)
     {
-        $errors = $this->validator->validate($skill);
+        $errors = $this->validator->validate($entity);
         return $errors;
     }
 
