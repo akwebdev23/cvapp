@@ -36,7 +36,15 @@ class RegistrationController extends AbstractController
         if (count($errors) > 0) {
             return new Response((string) $errors, 400);
         }
-        $userRep->add($newUser, true);
+        try {
+            $userRep->add($newUser, true);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $this->json([
+                'message' => $th->getMessage(),
+                'status' => 'error',
+            ]);
+        }
         return $this->json([
             'message' => 'Registration success!',
             'status' => 'ok',
