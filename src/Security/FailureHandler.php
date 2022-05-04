@@ -11,6 +11,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class FailureHandler implements AuthenticationFailureHandlerInterface
 {
     function onAuthenticationFailure(Request $request, AuthenticationException $exception){
-        return new JsonResponse(['error'=>'Не правильно введен логин или пароль']);
+        return new JsonResponse(['messages'=>'Не правильно введен логин или пароль', 'status' => 'error']);
     }
 }

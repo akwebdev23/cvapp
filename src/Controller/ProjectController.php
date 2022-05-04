@@ -14,7 +14,7 @@ use App\Entity\Project;
 class ProjectController extends AbstractController{
 
     /**
-     * @Route("/api/projects/{id}", name="project_get_one")
+     * @Route("/api/projects/one/{id}", name="project_get_one")
      */
     public function getOne(Project $project, SerializeService $serializeService):response
     {
@@ -85,10 +85,11 @@ class ProjectController extends AbstractController{
 
             $projectRepo->add($newProject, true);
             $newProjectSer = $serializeService->serialize($newProject);
-        } catch (\Throwable $th) {
+        } catch (\Throwable $error) {
             return $this->json([
-                'message' => $th->getMessage(),
+                'message' => $error->getMessage(),
                 'status' => 'error',
+                'error' => $error,
             ]);
         }
         return $this->json([

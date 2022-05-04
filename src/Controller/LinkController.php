@@ -113,10 +113,10 @@ class LinkController extends AbstractController
     {
         try {
             $dataArr = $request->request->getIterator();
-            $dataArr['project'] = $projectRepo->find($dataArr['project']);
-            $n =$dataArr['project'];
+            // $dataArr['project'] = $projectRepo->find($dataArr['project']);
+            // $n =$dataArr['project'];
 
-            $dataArr['link_type'] = $linkTypeRepo->find($dataArr['link_type']);
+            // $dataArr['link_type'] = $linkTypeRepo->find($dataArr['link_type']);
 
             $newLink = $linkService->createNewLink($dataArr);
             if(count($newLink[1])){

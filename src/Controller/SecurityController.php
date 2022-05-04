@@ -15,11 +15,15 @@ class SecurityController extends AbstractController
     /**
      * @Route("/api/login", name="app_login")
      */
-    public function login(): Response
+    public function login(SerializeService $serializeService): Response
     {
         $user = $this->getUser();
+        $user = $serializeService->serializeArray([$user])[0];
+        $user->password = '';
         return $this->json([
-                'user'  => $user ? $user->getEmail() : null,
+                'user'  => $user,
+                'status'  => 'ok',
+                'messages' => 'Успешно!'
             ]);
     }
     /**
@@ -30,15 +34,25 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
         if($user){
             $user = $serializeService->serializeArray([$user])[0];
+            $user->password = '';
+
             return $this->json([
                 'user'=>$user,
-                'message'=>'auth',
+                'authSuccess'=>true,
                 'status'=>'ok'
             ]);
         }
         return $this->json([
-            'message'=>'notauth',
+            'authSuccess'=>false,
             'status'=>'ok'
         ]);
+    }
+    /**
+     * @Route("/api/logout", name="app_logout", methods={"GET"})
+     */
+    public function logout(): void
+    {
+        // controller can be blank: it will never be called!
+        throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 }

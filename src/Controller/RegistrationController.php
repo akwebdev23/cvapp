@@ -27,26 +27,23 @@ class RegistrationController extends AbstractController
         $data = json_decode($request->getContent());
         $newUser = new User();
         $newUser->setEmail($data->email);
-        $newUser->setPassword($hasher->hashPassword($newUser, $data->password));
-        $newUser->setRoles([$data->roles]);
+        $newUser->setPassword($data->password);
         $newUser->setName($data->name);
-        $newUser->setPhone($data->phone);
 
-        $errors = $validator->validate($newUser);
-        if (count($errors) > 0) {
-            return new Response((string) $errors, 400);
+        $failData = $validator->validate($newUser);
+        $errorMessages = [];
+        foreach ($failData as $value) {
+            $errorMessages[] = $value->getMessage();
         }
-        try {
-            $userRep->add($newUser, true);
-        } catch (\Throwable $th) {
-            //throw $th;
+        if (count($errorMessages) > 0) {
             return $this->json([
-                'message' => $th->getMessage(),
-                'status' => 'error',
+                'messages' => $errorMessages,
+                'status' => 'validation_fail',
             ]);
         }
+        $userRep->add($newUser, true);
         return $this->json([
-            'message' => 'Registration success!',
+            'messages' => 'Пользователь '.$newUser->getName().' успешно зарегистрирован!',
             'status' => 'ok',
         ]);
     }

@@ -16,7 +16,7 @@ use App\Service\UploadService;
 class SkillController extends AbstractController{
 
     /**
-     * @Route("/api/skills/{id}", name="skill_get_one")
+     * @Route("/api/skills/one/{id}", name="skill_get_one")
      */
     public function getOne(Skill $skill, SerializeService $serializeService):response
     {
@@ -57,7 +57,7 @@ class SkillController extends AbstractController{
         ]);
     }
     /**
-     * @Route("/api/skills/create/new", name="skill_create")
+     * @Route("/api/skills/create", name="skill_create")
      */
     public function create(
         Request $request, 
@@ -97,6 +97,7 @@ class SkillController extends AbstractController{
             return $this->json([
                 'message' => $th->getMessage(),
                 'status' => 'error',
+                'error' => $th,
             ]);
         }
     }

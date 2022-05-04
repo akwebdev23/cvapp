@@ -3,13 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="Email {{ value }} уже зарегистрирован")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,6 +28,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Email {{ value }} не корректен")
+     * @Assert\Length(
+     *     min = 10,
+     *     max = 50,
+     *     minMessage = "Email должен включать более {{ limit }} символов",
+     *     maxMessage = "Email должен включать не более {{ limit }} символов",
+     * )
      */
     private $email;
 
@@ -33,16 +47,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length(
+     *     min = 6,
+     *     max = 50,
+     *     minMessage = "Поле пароль должно включать более {{ limit }} символов",
+     *     maxMessage = "Поле пароль должно включать не более {{ limit }} символов",
+     * )
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 50,
+     *     minMessage = "Поле имя должно включать более {{ limit }} символов",
+     *     maxMessage = "Поле имя должно включать не более {{ limit }} символов",
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * 
      */
     private $phone;
 
