@@ -14,7 +14,27 @@ use App\Service\SerializeService;
 use App\Service\UploadService;
 
 class SkillController extends AbstractController{
-
+    /**
+     * @Route("/api/skills/remove/{id}", name="skill_remove_one")
+     */
+    public function removeSkill(Skill $skill, SkillRepository $skillRepo):response
+    {
+        try {
+            $skillName = $skill->getName();
+            $skillRepo->remove($skill);
+        } catch (\Throwable $th) {
+            $thMessage = $th->getMessage();
+            return $this->json([
+                'message' => $thMessage,
+                'status' => 'error',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Success!',
+            'data'=> $skillName,
+            'status' => 'ok',
+        ]);
+    }
     /**
      * @Route("/api/skills/one/{id}", name="skill_get_one")
      */

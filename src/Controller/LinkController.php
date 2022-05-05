@@ -18,7 +18,49 @@ use App\Repository\ProjectRepository;
 class LinkController extends AbstractController
 {
     /**
-     * @Route("/api/links/{id}", name="link_get_one")
+     * @Route("/api/links/remove/{id}", name="link_remove_one")
+     */
+    public function removeLink(Link $link, LinkRepository $linkRepo):response
+    {
+        try {
+            $linkName = $link->getName();
+            $linkRepo->remove($link);
+        } catch (\Throwable $th) {
+            $thMessage = $th->getMessage();
+            return $this->json([
+                'message' => $thMessage,
+                'status' => 'error',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Success!',
+            'data'=> $linkName,
+            'status' => 'ok',
+        ]);
+    }
+    /**
+     * @Route("/api/linktypes/remove/{id}", name="link_type_remove_one")
+     */
+    public function removeLinkType(LinkType $linkType, LinkTypeRepository $linkTypeRepo):response
+    {
+        try {
+            $linkTypeName = $linkType->getName();
+            $linkTypeRepo->remove($linkType);
+        } catch (\Throwable $th) {
+            $thMessage = $th->getMessage();
+            return $this->json([
+                'message' => $thMessage,
+                'status' => 'error',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Success!',
+            'data'=> $linkTypeName,
+            'status' => 'ok',
+        ]);
+    }
+    /**
+     * @Route("/api/links/one/{id}", name="link_get_one")
      */
     public function getOneLink(Link $link, SerializeService $serializeService):response
     {
@@ -37,8 +79,8 @@ class LinkController extends AbstractController
             'status' => 'ok',
         ]);
     }
-        /**
-     * @Route("/api/linktypes/{id}", name="link_type_get_one")
+    /**
+     * @Route("/api/linktypes/one/{id}", name="link_type_get_one")
      */
     public function getOneLinkType(LinkType $linkType, SerializeService $serializeService):response
     {
@@ -78,7 +120,7 @@ class LinkController extends AbstractController
             'status' => 'ok',
         ]);
     }
-        /**
+    /**
      * @Route("/api/linktypes", name="link_types_get_all")
      */
     public function getAllLinkTypes(LinkTypeRepository $linkTypeRepo, SerializeService $serializeService):response
@@ -100,16 +142,16 @@ class LinkController extends AbstractController
         ]);
     }
     /**
-     * @Route("/api/links/create/new", name="links_create")
+     * @Route("/api/links/create", name="links_create")
      */
     public function createLink(
-        Request $request, 
-        LinkService $linkService, 
-        LinkRepository $linkRepo,
-        LinkTypeRepository $linkTypeRepo,
-        ProjectRepository $projectRepo,
-        SerializeService $serializeService
-    ): Response
+            Request $request, 
+            LinkService $linkService, 
+            LinkRepository $linkRepo,
+            LinkTypeRepository $linkTypeRepo,
+            ProjectRepository $projectRepo,
+            SerializeService $serializeService
+        ): Response
     {
         try {
             $dataArr = $request->request->getIterator();
@@ -141,11 +183,11 @@ class LinkController extends AbstractController
      * @Route("/api/linktypes/create/new", name="link_types_create")
      */
     public function createLinkType(
-        Request $request, 
-        LinkService $linkService, 
-        LinkTypeRepository $linkTypeRepo,
-        SerializeService $serializeService
-    ): Response
+            Request $request, 
+            LinkService $linkService, 
+            LinkTypeRepository $linkTypeRepo,
+            SerializeService $serializeService
+        ): Response
     {
         try {
             $dataArr = $request->request->getIterator();

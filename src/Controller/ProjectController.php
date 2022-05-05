@@ -11,8 +11,29 @@ use App\Repository\ProjectRepository;
 use App\Service\SerializeService;
 use App\Service\UploadService;
 use App\Entity\Project;
-class ProjectController extends AbstractController{
 
+class ProjectController extends AbstractController{
+    /**
+     * @Route("/api/projects/remove/{id}", name="project_remove_one")
+     */
+    public function removeProject(Project $project, ProjectRepository $projectRepo):response
+    {
+        try {
+            $projectName = $project->getName();
+            $projectRepo->remove($project);
+        } catch (\Throwable $th) {
+            $thMessage = $th->getMessage();
+            return $this->json([
+                'message' => $thMessage,
+                'status' => 'error',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Success!',
+            'data'=> $projectName,
+            'status' => 'ok',
+        ]);
+    }
     /**
      * @Route("/api/projects/one/{id}", name="project_get_one")
      */

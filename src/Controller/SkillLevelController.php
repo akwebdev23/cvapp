@@ -9,10 +9,32 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Service\SkillLevelService;
 use App\Repository\SkillLevelRepository;
 use App\Service\SerializeService;
+use App\Entity\SkillLevel;
 use Symfony\Component\Filesystem\Filesystem;
 
 class SkillLevelController extends AbstractController{
 
+    /**
+     * @Route("/api/skills/levels/remove/{id}", name="skill_level_remove_one")
+     */
+    public function removeSkillLevel(SkillLevel $skillLevel, SkillLevelRepository $skillLevelRepo):response
+    {
+        try {
+            $skillLevelName = $skillLevel->getName();
+            $skillLevelRepo->remove($skillLevel);
+        } catch (\Throwable $th) {
+            $thMessage = $th->getMessage();
+            return $this->json([
+                'message' => $thMessage,
+                'status' => 'error',
+            ]);
+        }
+        return $this->json([
+            'message' => 'Success!',
+            'data'=> $skillLevelName,
+            'status' => 'ok',
+        ]);
+    }
     /**
      * @Route("/api/skills/levels/all", name="skill_level_get_all")
      */
