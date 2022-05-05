@@ -42,8 +42,8 @@ class LinkService{
     }
     public function createNewLinkType($data)
     {
-        $newLink = $this->updateService->checkAndGetEntityForUpdate(
-            $this->linkRepo,
+        $newLinkType = $this->updateService->checkAndGetEntityForUpdate(
+            $this->linkTypeRepo,
             ['name'=>$data['name']],
             LinkType::class,
             $data
@@ -51,7 +51,7 @@ class LinkService{
         // $newLink = new LinkType();
         // $newLink->setName($data['name'] ?? null);
         // $newLink->setStyle($data['style'] ?? null);
-        $errors = $this->validatorService->validate($newLink);
-        return [$newLink, $errors];
+        $errors = $this->validatorService->validate($newLinkType);
+        return [$newLinkType, $errors];
     }
 }
