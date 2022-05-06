@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
         $newUser = new User();
         $newUser->setEmail($data->email);
         $newUser->setPassword($data->password);
-        $newUser->setName($data->name);
+        $newUser->setName($data->name ? $data->name : $data->email);
 
         $failData = $validator->validate($newUser);
         $errorMessages = [];
