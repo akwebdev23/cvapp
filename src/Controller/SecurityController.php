@@ -33,7 +33,7 @@ class SecurityController extends AbstractController
     {
         $user = $this->getUser();
         if($user){
-            $user = $serializeService->serializeArray([$user])[0];
+            $serializeUser = $serializeService->serializeArray([$user])[0];
             $user->password = '';
 
             return $this->json([
