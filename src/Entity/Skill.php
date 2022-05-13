@@ -46,6 +46,7 @@ class Skill
 
     /**
      * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="skills")
+     * @MaxDepth(2)
      */
     private $projects;
 
