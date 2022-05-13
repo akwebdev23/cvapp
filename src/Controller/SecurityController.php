@@ -37,7 +37,7 @@ class SecurityController extends AbstractController
             $user->password = '';
 
             return $this->json([
-                'user'=>$user,
+                'user'=>$serializeUser,
                 'authSuccess'=>true,
                 'status'=>'ok'
             ]);
