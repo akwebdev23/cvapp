@@ -61,7 +61,7 @@ class SkillController extends AbstractController{
     public function getAll(SkillRepository $skillRepo, SkillService $skillService):response
     {
         try {
-            $kills = $skillService->getNormalizeArray();
+            $skills = $skillService->getNormalizeArray($skillRepo);
             
         } catch (\Throwable $th) {
             $thMessage = $th->getMessage();
