@@ -40,7 +40,7 @@ class UpdateService{
             $newObj = $existEntity;
         
         foreach ($data as $key => $value) {
-            if($value === null){
+            if($value === null || $value == ''){
                 continue;
             }
             $property = explode('-', $key);
