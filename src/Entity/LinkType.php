@@ -6,6 +6,8 @@ use App\Repository\LinkTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+
 
 /**
  * @ORM\Entity(repositoryClass=LinkTypeRepository::class)
@@ -31,6 +33,8 @@ class LinkType
 
     /**
      * @ORM\OneToMany(targetEntity=Link::class, mappedBy="linkType")
+     * @MaxDepth(1)
+     * 
      */
     private $links;
 

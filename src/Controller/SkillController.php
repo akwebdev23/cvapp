@@ -58,11 +58,11 @@ class SkillController extends AbstractController{
     /**
      * @Route("/api/skills", name="skill_get_all")
      */
-    public function getAll(SkillRepository $skillRepo, SerializeService $serializeService):response
+    public function getAll(SkillRepository $skillRepo, SkillService $skillService):response
     {
         try {
-            $all = $skillRepo->findAll();
-            $all = $serializeService->serializeArray($all);
+            $kills = $skillService->getNormalizeArray();
+            
         } catch (\Throwable $th) {
             $thMessage = $th->getMessage();
             return $this->json([
@@ -72,7 +72,7 @@ class SkillController extends AbstractController{
         }
         return $this->json([
             'message' => 'Success!',
-            'data'=> $all,
+            'data'=> $skills,
             'status' => 'ok',
         ]);
     }

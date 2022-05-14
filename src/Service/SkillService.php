@@ -39,21 +39,34 @@ class SkillService{
             Skill::class,
             $data
         );
-        // $newSkill = new Skill();
-        // $newSkill->setName($data['name']);
-        // $newSkill->setLabel($data['label']);
-        // isset($data['level']) 
-        //     ? $newSkill->setLevel($this->skillLevelRepo->find($data['level']))
-        //     : false;
-        // $newSkill->setDescription($data['description'] ?? null);
-        // $newSkill->setIcon($data['icon'] ?? null);
-        // $newSkill->setImage($data['image'] ?? null);
-        // foreach ($data['item_id'] ?? [] as $key => $value) {
-        //     $project = $this->projectRepo->find($value);
-        //     $newSkill->addProject($project);
-        // }
         $errors = $this->validatorService->validate($newSkill);
         return [$newSkill, $errors];
     }
+    public function getNormalizeArray(SkillRepository $skillRepo)
+    {
+        $skills = [];
+        $all = $skillRepo->findAll();
+        foreach ($all as $keySkill => $skill) {
+            $skillR['id'] = $skill->getId();
+            $skillR['name'] = $skill->getName();
+            $skillR['label'] = $skill->getLabel();
+            $skillR['description'] = $skill->getDescription();
+            $skillR['icon'] = $skill->getIcon();
+            $skillR['projects'] = [];
+            $prs = $skill->getProjects();
+            $lvl = $skill->getLevel();
 
+            foreach ($prs as $keyPr => $pr) {
+                $skillR['projects'][] = [
+                    'id'=>$pr->getId(),
+                    'icon'=>$pr->getIcon(),
+                    'name'=>$pr->getName(),
+                ];
+
+            }
+            $skillR['level'] = ['level' => $lvl->getLevel(), 'style' => $lvl->getStyle()];
+            $skills[] = $skillR;
+        }
+        return $skills;
+    }
 }

@@ -31,12 +31,6 @@ class SkillLevel
     private $level;
 
     /**
-     * @ORM\OneToMany(targetEntity=Skill::class, mappedBy="level")
-     * @MaxDepth(2)
-     */
-    private $skills;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $style;
@@ -71,36 +65,6 @@ class SkillLevel
     public function setLevel(?int $level): self
     {
         $this->level = $level;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Skill>
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills[] = $skill;
-            $skill->setLevel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        if ($this->skills->removeElement($skill)) {
-            // set the owning side to null (unless already changed)
-            if ($skill->getLevel() === $this) {
-                $skill->setLevel(null);
-            }
-        }
 
         return $this;
     }

@@ -48,12 +48,13 @@ class Skill
 
     /**
      * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="skills")
-     * @MaxDepth(2)
+     * @MaxDepth(1)
      */
     private $projects;
 
     /**
      * @ORM\ManyToOne(targetEntity=SkillLevel::class, inversedBy="skills")
+     * @MaxDepth(1)
      */
     private $level;
 

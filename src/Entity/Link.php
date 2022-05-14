@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\LinkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+
 
 /**
  * @ORM\Entity(repositoryClass=LinkRepository::class)
@@ -29,11 +31,15 @@ class Link
 
     /**
      * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="links")
+     * @MaxDepth(1)
+     * 
      */
     private $project;
 
     /**
      * @ORM\ManyToOne(targetEntity=LinkType::class, inversedBy="links")
+     * @MaxDepth(1)
+     * 
      */
     private $linkType;
 

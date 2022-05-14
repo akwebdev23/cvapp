@@ -42,7 +42,7 @@ class Project
 
     /**
      * @ORM\ManyToMany(targetEntity=Skill::class, inversedBy="projects")
-     * @MaxDepth(2)
+     * @MaxDepth(1)
      */
     private $skills;
 
@@ -68,7 +68,7 @@ class Project
 
     /**
      * @ORM\OneToMany(targetEntity=Link::class, mappedBy="project")
-     * @MaxDepth(2)
+     * @MaxDepth(1)
      */
     private $links;
 
